@@ -31,7 +31,12 @@ TARGET_PATH		= $(INSTALLDIR)/bin:$(PATH)
 # Override with 'make INSTALLDIR=<toolchain full installation path>'
 INSTALLDIR		?= $(BUILDDIR)/nios2
 
-all: gcc elf2flt gdb-host
+include $(TOPDIR)/u-boot.mk
+
+# Build u-boot tools if sources are present
+UBOOT_TOOLS=$(shell test -d $(UBOOTSRC) && echo u-boot-tools)
+
+all: gcc elf2flt gdb-host $(UBOOT_TOOLS)
 
 # Kernel headers
 kernel-headers: $(KERNEL_DIR)/.configured
