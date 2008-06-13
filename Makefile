@@ -10,6 +10,7 @@ BINUTILS_SRC		?= $(TOPDIR)/../binutils
 GCC_SRC			?= $(TOPDIR)/../gcc3
 ELF2FLT_SRC		?= $(TOPDIR)/../elf2flt
 GDB_SRC			?= $(TOPDIR)/../insight
+UBOOT_SRC		?= $(TOPDIR)/../u-boot
 # Build directories
 BUILDDIR		?= $(TOPDIR)/build
 SYSROOT			= $(BUILDDIR)/sysroot/
@@ -18,6 +19,7 @@ BINUTILS_BUILD		= $(BUILDDIR)/binutils-build
 GCC_BOOTSTRAP_BUILD	= $(BUILDDIR)/gcc-bootstrap-build
 GCC_BUILD		= $(BUILDDIR)/gcc-build
 GDB_BUILD_HOST		= $(BUILDDIR)/gdb-host
+UBOOT_BUILD		= $(BUILDDIR)/u-boot
 # Configs
 UCLIBC_CONF		= $(TOPDIR)/config/uClibc.config
 # Target defines
@@ -31,12 +33,17 @@ TARGET_PATH		= $(INSTALLDIR)/bin:$(PATH)
 # Override with 'make INSTALLDIR=<toolchain full installation path>'
 INSTALLDIR		?= $(BUILDDIR)/nios2
 
+# Build everything by default
+all: toolchain+extras
+
+# U-boot
+UBOOT_y=$(shell test -d $(UBOOT_SRC) && echo yes)
+ifeq ($(UBOOT_y),yes)
 include $(TOPDIR)/u-boot.mk
+endif
 
-# Build u-boot tools if sources are present
-UBOOT_TOOLS=$(shell test -d $(UBOOTSRC) && echo u-boot-tools)
-
-all: gcc elf2flt gdb-host $(UBOOT_TOOLS)
+toolchain: gcc elf2flt
+toolchain+extras: toolchain gdb-host $(UBOOT_TOOLS)
 
 # Kernel headers
 kernel-headers: $(KERNEL_DIR)/.configured
