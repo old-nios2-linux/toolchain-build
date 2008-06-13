@@ -42,3 +42,5 @@ $(INSTALLDIR)/bin/$(TARGET_NAME)-gdb: $(GDB_BUILD_HOST)/gdb/gdb
 	ln -snf $(TARGET_NAME)-insight $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-insight
 	ln -snf ../../bin/$(TARGET_NAME)-gdbtui $(INSTALLDIR)/$(TARGET_NAME)/bin/gdbtui
 	ln -snf $(TARGET_NAME)-gdbtui $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-gdbtui
+
+.PHONY: $(GDB_HOST) $(GDB_HOST_CLEAN) gdb-host-distclean

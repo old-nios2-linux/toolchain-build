@@ -268,7 +268,11 @@ $(ELF2FLT_SRC)/elf2flt: $(ELF2FLT_SRC)/.configured
 	ln -snf $(TARGET_NAME)-ld.real $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-ld.real
 
 # Clean
-clean: elf2flt-clean gcc-clean gcc-bootstrap-clean uClibc-clean uClibc-headers-clean kernel-headers-clean $(GDB_HOST_CLEAN) $(UBOOT_TOOLS_CLEAN)
+clean: elf2flt-clean gcc-clean gcc-bootstrap-clean uClibc-clean uClibc-headers-clean \
+	kernel-headers-clean $(GDB_HOST_CLEAN) $(UBOOT_TOOLS_CLEAN)
 
 distclean: elf2flt-distclean uClibc-distclean
 	rm -rf $(BUILDDIR)
+
+.PHONY: toolchain toolchain+extras kernel-headers uClibc-headers uClibc uClibc-menuconfig \
+	binutils gcc-bootstrap gcc gcc-configured elf2flt clean distclean

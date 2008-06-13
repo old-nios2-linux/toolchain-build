@@ -44,10 +44,12 @@ $(UBOOT_BUILD)/tools/mkimage: $(UBOOT_BUILD)/.tools_configured
 	touch $@
 
 # Clean
-u-boot-clean:
+$(UBOOT_TOOLS_CLEAN):
 	PATH=$(TARGET_PATH):$(PATH) \
 	$(MAKE) O=$(UBOOT_BUILD) -C $(UBOOT_SRC) ARCH=$(UBOOT_ARCH) clean
 	rm -f $(UBOOT_BUILD)/.tools_configured $(UBOOT_BUILD)/.configured
 
 u-boot-distclean:
 	rm -rf $(UBOOT_BUILD)
+
+.PHONY: u-boot_config u-boot $(UBOOT_TOOLS) $(UBOOT_TOOLS_CLEAN) u-boot-distclean
