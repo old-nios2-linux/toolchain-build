@@ -300,7 +300,7 @@ $(INSTALLDIR)/bin/$(TARGET_NAME)-gdb: $(GDB_BUILD_HOST)/gdb/gdb
 	ln -snf $(TARGET_NAME)-gdbtui $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-gdbtui
 
 # Clean
-clean: gdb-host-clean elf2flt-clean gcc-clean gcc-bootstrap-clean uClibc-clean uClibc-headers-clean kernel-headers-clean extra-version-clean
+clean: gdb-host-clean elf2flt-clean gcc-clean gcc-bootstrap-clean uClibc-clean uClibc-headers-clean kernel-headers-clean $(UBOOT_TOOLS_CLEAN)
 
 distclean: elf2flt-distclean uClibc-distclean
 	rm -rf $(BUILDDIR)

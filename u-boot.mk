@@ -12,7 +12,9 @@ $(warning Board not defined! Using EP1S10 as default.)
 UBOOT_BOARD	= EP1S10
 endif
 UBOOT_CONFIG	= $(UBOOT_BOARD)_config
+# Make-rules called from top-level
 UBOOT_TOOLS	= u-boot-tools
+UBOOT_TOOLS_CLEAN = u-boot-clean
 
 # U-boot
 u-boot_config: $(UBOOT_BUILD)/.configured
