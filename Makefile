@@ -4,7 +4,7 @@
 
 TOPDIR			?= $(PWD)
 # Sources
-KERNEL_SRC		?= $(TOPDIR)/../uClinux-dist/linux-2.6.x
+KERNEL_SRC		?= $(TOPDIR)/../linux-2.6
 UCLIBC_SRC		?= $(TOPDIR)/../uClibc
 BINUTILS_SRC		?= $(TOPDIR)/../binutils
 GCC_SRC			?= $(TOPDIR)/../gcc3
