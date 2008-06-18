@@ -259,13 +259,14 @@ $(ELF2FLT_SRC)/.configured:
 		--disable-emit-relocs)
 	touch $(ELF2FLT_SRC)/.configured
 
-$(ELF2FLT_SRC)/elf2flt: $(ELF2FLT_SRC)/.configured
+$(ELF2FLT_SRC)/elf2flt: $(ELF2FLT_SRC)/.configured $(INSTALLDIR)/$(TARGET_NAME)/bin/ld
 	$(MAKE) -C $(ELF2FLT_SRC) all
 	$(MAKE) -C $(ELF2FLT_SRC) install
 	# Create nios2-linux-* symlinks
 	ln -snf $(TARGET_NAME)-elf2flt $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-elf2flt
 	ln -snf $(TARGET_NAME)-flthdr  $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-flthdr
 	ln -snf $(TARGET_NAME)-ld.real $(INSTALLDIR)/bin/$(TARGET_SHORT_NAME)-ld.real
+	touch -c $(ELF2FLT_SRC)/elf2flt
 
 # Clean
 clean: elf2flt-clean gcc-clean gcc-bootstrap-clean uClibc-clean uClibc-headers-clean \
