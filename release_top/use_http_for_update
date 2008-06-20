@@ -1,0 +1,6 @@
+for i in \
+binutils gcc3 linux-2.6 toolchain-build uClibc elf2flt \
+insight u-boot uClinux-dist
+do
+sed -i -e szgit:zhttp:zg $i/.git/config
+done

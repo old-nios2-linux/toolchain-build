@@ -1,0 +1,47 @@
+	Nios II Linux/uClinux Community Release 20080619
+
+Welcome to Nios II Community! This is the community supported version of 
+Nios II uClinux. This is package will work only on Linux. You will need 
+a virtual Linux to run it on Windows. This is GPL software, and come 
+with absolutely NO warrenty.
+
+Please follow the Nios WiKi to use this package,
+
+http://nioswiki.jot.com/WikiHome/OperatingSystems/%C2%B5Clinux
+http://www.crashcourse.ca/wiki/index.php/Altera_Nios_II
+
+You can get support with the Nios forum,
+
+http://forum.niosforum.com/forum/index.php?showforum=18
+
+
+Quick start,
+
+1. Extract the source, excute "./checkout" .
+
+2. Build the toolchain,
+
+cd toolchain-build
+make gcc elf2flt
+cd ..
+
+Then add the PATH to your profile file, .bash_profile or .profile , like 
+this, PATH=$PATH:/home/hippo/nios2-linux/toolchain-build/build/nios2/bin
+
+Or you can install the binary toolchain as described in the WiKi.
+
+3. Build the Linux image,
+
+cd uClinux-dist
+make menuconfig
+make vendor_hwselect SYSPTF=<path to your system ptf>
+make
+
+4. Only if you are behind a proxy firewall and cannot use git protocol, 
+you can change the git to use http to get updates from community server 
+with this command, "./use_http_for_update" .
+
+5. You can fetch updates from server with, "./update" .
+
+
+Enjoy!!
