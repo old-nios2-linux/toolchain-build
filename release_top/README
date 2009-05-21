@@ -1,4 +1,4 @@
-	Nios II Linux/uClinux Community Release 20080619
+	Nios II Linux/uClinux Community Release 20090521
 
 Welcome to Nios II Community! This is the community supported version of 
 Nios II uClinux. This is package will work only on Linux. You will need 
@@ -7,39 +7,40 @@ with absolutely NO warrenty.
 
 Please follow the Nios WiKi to use this package,
 
-http://nioswiki.jot.com/WikiHome/OperatingSystems/%C2%B5Clinux
-http://www.crashcourse.ca/wiki/index.php/Altera_Nios_II
+http://www.nioswiki.com/OperatingSystems/UClinux
 
-You can get support with the Nios forum,
+You can get support with the Nios forum, or the nios2-dev mailing list.
 
 http://forum.niosforum.com/forum/index.php?showforum=18
+http://sopc.et.ntust.edu.tw/cgi-bin/mailman/listinfo/nios2-dev
 
 
-Quick start,
+QUICK START
 
 1. Extract the source, excute "./checkout" .
 
-2. Build the toolchain,
+2. Install the binary toolchain as described in the WiKi.
+
+Or build the toolchain,
 
 cd toolchain-build
-make gcc elf2flt
+make gcc elf2flt gdb-host
 cd ..
 
 Then add the PATH to your profile file, .bash_profile or .profile , like 
 this, PATH=$PATH:/home/hippo/nios2-linux/toolchain-build/build/nios2/bin
 
-Or you can install the binary toolchain as described in the WiKi.
-
 3. Build the Linux image,
 
 cd uClinux-dist
 make menuconfig
-make vendor_hwselect SYSPTF=<path to your system ptf>
+make vendor_hwselect SYSPTF=/your/path/to/the/system/ptf
 make
 
 4. Only if you are behind a proxy firewall and cannot use git protocol, 
 you can change the git to use http to get updates from community server 
-with this command, "./use_http_for_update" .
+with this command, "./use_http_for_update" . But this is very slow and
+not recommended.
 
 5. You can fetch updates from server with, "./update" .
 
