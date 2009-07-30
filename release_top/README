@@ -1,4 +1,4 @@
-	Nios II Linux/uClinux Community Release 20090521
+	Nios II Linux/uClinux Community Release 20090730
 
 Welcome to Nios II Community! This is the community supported version of 
 Nios II uClinux. This is package will work only on Linux. You will need 
@@ -52,7 +52,7 @@ public access, "chmod og-rwx config". Replace <http_proxy_ip> <port>
 to that of your http proxy server.
 
 IdentityFile ~/.ssh/id_rsa
-IdentityFile ~/nios2-linux/toolchain-build/release_top/sshkey/id_rsa
+IdentityFile ~/nios2-linux/sshkey/id_rsa
 ProxyCommand corkscrew <http_proxy_ip> <port> %h %p
     
 If you failed to use ssh tunnling as above, you may try dumb http protocol
