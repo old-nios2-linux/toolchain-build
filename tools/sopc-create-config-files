@@ -219,7 +219,7 @@ EOF
 		   $base | $io_space);
 	    printf("#define CONFIG_SMC91111\n");
 	    printf("#define CONFIG_SMC_USE_32_BIT\n");
-	} elsif ($kind eq 'DM9000A_IF') {
+	} elsif ($kind eq 'DM9000A_IF' || $kind eq 'dm9000a') {
 	    printf("#define CONFIG_DM9000_BASE 0x%08x\n",
 		   $base | $io_space);
 	    printf("#define DM9000_IO 0x%08x\n",
