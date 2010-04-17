@@ -142,7 +142,7 @@ sub gen_uboot
 		   num(get_value($module, 'dcache_size')));
 	    printf("#define CONFIG_SYS_DCACHELINE_SIZE %d\n",
 		   num(get_value($module, 'dcache_lineSize')));
-
+	    printf("#define IO_REGION_BASE 0x%08x\n", $io_space);
 	} elsif ($kind eq 'altera_avalon_sysid') {
 	    printf("#define CONFIG_SYS_SYSID_BASE 0x%08x\n",
 		   $base | $io_space);
