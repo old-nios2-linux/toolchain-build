@@ -236,10 +236,16 @@ EOF
 	} elsif ($kind eq 'triple_speed_ethernet') {
 	    printf("#define CONFIG_SYS_ALTERA_TSE_MAC_BASE 0x%08x\n",
 		   $base | $io_space);
-	    printf("#define CONFIG_SYS_ALTERA_TSE_RX_FIFO %d\n",
-		   2048);
-	    printf("#define CONFIG_SYS_ALTERA_TSE_TX_FIFO %d\n",
-		   2048);
+		my $tse_defs = <<EOF;
+#define CONFIG_SYS_ALTERA_TSE_RX_FIFO 2048
+#define CONFIG_SYS_ALTERA_TSE_TX_FIFO 2048
+#define CONFIG_ALTERA_TSE
+#define CONFIG_MII
+#define CONFIG_CMD_MII
+#define CONFIG_SYS_ALTERA_TSE_PHY_ADDR 18
+#define CONFIG_SYS_ALTERA_TSE_FLAGS 0
+EOF
+		print $tse_defs;
 	} elsif ($kind eq 'altera_avalon_sgdma') {
 	    my $start = get_start('avalon_streaming', $name . '.in');
 	    my $found = 0;
