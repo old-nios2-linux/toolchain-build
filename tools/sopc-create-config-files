@@ -1,5 +1,9 @@
 #!/usr/bin/perl
 # generate u-boot config file from sopc
+#
+# Copyright (C) 2010 Thomas Chou <thomas@wytron.com.tw>
+# Licensed under the GPL-2 or later.
+#
 # usage: sopc-create-config-files <sopc> <fpga.h>
 
 use strict;
@@ -188,6 +192,25 @@ sub gen_uboot
 #define CONFIG_SF_DEFAULT_SPEED 30000000
 #define CONFIG_SPI_FLASH
 #define CONFIG_SPI_FLASH_STMICRO
+EOF
+		print $spi_defs;
+	} elsif ($kind eq 'altera_avalon_spi' && $name eq 'mmc_spi') {
+	    printf("#define %s_BASE 0x%08x\n",
+		   uc $name, $base | $io_space);
+	    my $spi_defs = <<EOF;
+#define CONFIG_SYS_ALTERA_SPI_LIST { MMC_SPI_BASE }
+#define CONFIG_ALTERA_SPI
+#define CONFIG_CMD_SPI
+#define CONFIG_CMD_MMC
+#define CONFIG_MMC
+#define CONFIG_GENERIC_MMC
+#define CONFIG_MMC_SPI
+#define CONFIG_MMC_SPI_BUS 0
+#define CONFIG_MMC_SPI_CS 0
+#define CONFIG_MMC_SPI_SPEED 30000000
+#define CONFIG_MMC_SPI_MODE SPI_MODE_3
+#define CONFIG_CMD_FAT
+#define CONFIG_DOS_PARTITION
 EOF
 		print $spi_defs;
 	} elsif ($kind eq 'altera_avalon_cf') {
