@@ -183,9 +183,10 @@ sub gen_uboot
 	    } else {
 		$base += 0x400;
 	    }
-	    printf("#define CONFIG_SYS_SPI_BASE 0x%08x\n",
+	    printf("#define EPCS_CONTROLLER_REG_BASE 0x%08x\n",
 		   $base | $io_space);
 	    my $spi_defs = <<EOF;
+#define CONFIG_SYS_ALTERA_SPI_LIST { EPCS_CONTROLLER_REG_BASE }
 #define CONFIG_ALTERA_SPI
 #define CONFIG_CMD_SPI
 #define CONFIG_CMD_SF
