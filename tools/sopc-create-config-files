@@ -8,19 +8,14 @@
 
 use strict;
 use XML::LibXML;
+use Getopt::Long;
 
-my $sopc = $ARGV[0];
-my $header = $ARGV[1];
-my $parser = XML::LibXML->new();
-my $doc = $parser->parse_file($sopc);
+my $doc;
 my $cpu_name;
 my $device;
 my $kernel_space = 0;
 my $io_space = 0x80000000;
 my %modules = ();
-if ($header) {
-    open HEADER, ">$header";
-}
 
 sub num
 {
@@ -393,21 +388,50 @@ sub scan_bus
     }
 }
 
+GetOptions('module=s' => \$cpu_name);
+
+my $sopc = $ARGV[0];
+my $header = $ARGV[1];
+my $parser = XML::LibXML->new();
+my $cpu;
+$doc = $parser->parse_file($sopc);
+
+# find cpu
+if ($cpu_name) {
+    foreach my $t ($doc->findnodes(
+			   "/system/module[\@kind='altera_nios2' and
+				\@name='$cpu_name']")) {
+	$cpu = $t;
+    }
+} else {
+    my @cpus = $doc->findnodes(
+			   "/system/module[\@kind='altera_nios2']");
+    if ($#cpus > 0) {
+	printf("More than one CPU found, please select one with --module\n");
+	foreach my $t (@cpus) {
+	    printf("%s\n", $t->getAttribute('name'));
+	}
+	exit 1;
+    }
+    $cpu = $cpus[0];
+}
+if (!defined($cpu)) {
+    printf("CPU not found\n");
+    exit 1;
+}
+$cpu_name = $cpu->getAttribute('name');
+if (get_value($cpu, 'mmu_enabled') eq 'true') {
+    $kernel_space = 0xc0000000;
+    $io_space = 0xe0000000;
+}
 foreach my $parm ($doc->findnodes("//parameter[\@name='deviceFamily']")) {
     $device = $parm->getAttribute('value');
-}
-# find cpu
-foreach my $cpu ($doc->findnodes( "/system/module[\@kind='altera_nios2']")) {
-    $cpu_name = $cpu->getAttribute('name');
-    if (get_value($cpu, 'mmu_enabled') eq 'true') {
-	$kernel_space = 0xc0000000;
-	$io_space = 0xe0000000;
-    }
 }
 
 scan_bus($cpu_name . ".data_master", 0);
 
 if ($header) {
+    open HEADER, ">$header";
     select HEADER;
 }
 my $header_def = '_' . uc($header) . '_';
