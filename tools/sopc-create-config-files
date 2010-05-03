@@ -311,6 +311,28 @@ EOF
 #define CONFIG_SYS_MAX_FLASH_SECT 1024
 EOF
 		print $flash_defs;
+	} elsif ($kind eq 'nand_flash') {
+	    printf("#define CONFIG_SYS_NAND_BASE 0x%08x\n",
+		   $base | $io_space);
+	    my $nand_defs = <<EOF;
+#define CONFIG_CMD_NAND
+#define CONFIG_NAND_PLAT
+#define CONFIG_SYS_MAX_NAND_DEVICE 1
+#define NIOS2_NAND_PLAT_CLE 2
+#define NIOS2_NAND_PLAT_ALE 3
+#define NAND_PLAT_WRITE_CMD(chip, cmd) \\
+	writeb(cmd, (unsigned int)(this->IO_ADDR_W) + \\
+		(1 << NIOS2_NAND_PLAT_CLE))
+#define NAND_PLAT_WRITE_ADR(chip, cmd) \\
+	writeb(cmd, (unsigned int)(this->IO_ADDR_W) + \\
+		(1 << NIOS2_NAND_PLAT_ALE))
+#define NAND_PLAT_INIT() {}
+#ifdef CONFIG_SYS_GPIO_NRB
+# define NAND_PLAT_DEV_READY(chip) \\
+	readl(CONFIG_SYS_GPIO_BASE + (CONFIG_SYS_GPIO_NRB << 2))
+#endif
+EOF
+		print $nand_defs;
 	} elsif ($kind eq 'altera_avalon_cy7c1380_ssram') {
 	    printf("#define CONFIG_SYS_SRAM_BASE 0x%08x\n",
 		   $base | $kernel_space);
