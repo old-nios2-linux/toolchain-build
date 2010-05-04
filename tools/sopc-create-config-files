@@ -321,16 +321,14 @@ EOF
 #define NIOS2_NAND_PLAT_CLE 2
 #define NIOS2_NAND_PLAT_ALE 3
 #define NAND_PLAT_WRITE_CMD(chip, cmd) \\
-	writeb(cmd, (unsigned int)(this->IO_ADDR_W) + \\
+	writel(cmd, (unsigned int)(this->IO_ADDR_W) + \\
 		(1 << NIOS2_NAND_PLAT_CLE))
 #define NAND_PLAT_WRITE_ADR(chip, cmd) \\
-	writeb(cmd, (unsigned int)(this->IO_ADDR_W) + \\
+	writel(cmd, (unsigned int)(this->IO_ADDR_W) + \\
 		(1 << NIOS2_NAND_PLAT_ALE))
 #define NAND_PLAT_INIT() {}
-#ifdef CONFIG_SYS_GPIO_NRB
-# define NAND_PLAT_DEV_READY(chip) \\
+#define NAND_PLAT_DEV_READY(chip) \\
 	readl(CONFIG_SYS_GPIO_BASE + (CONFIG_SYS_GPIO_NRB << 2))
-#endif
 EOF
 		print $nand_defs;
 	} elsif ($kind eq 'altera_avalon_cy7c1380_ssram') {
