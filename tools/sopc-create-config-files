@@ -130,6 +130,9 @@ sub gen_uboot
 	    printf("#define CONFIG_SYS_RESET_ADDR 0x%08x\n",
 		   $addr | $kernel_space);
 	    $dev = get_value($module, 'exceptionSlave');
+	    if (!defined($dev)) {
+		$dev = get_parm($module, 'exceptionSlave')->to_literal;
+	    }
 	    $addr = num(get_value($module, 'exceptionOffset')) +
 		$modules{$dev};
 	    printf("#define CONFIG_SYS_EXCEPTION_ADDR 0x%08x\n",
