@@ -549,6 +549,9 @@ foreach my $parm ($doc->findnodes("//parameter[\@name='deviceFamily']")) {
     $device = $parm->getAttribute('value');
 }
 
+if (get_value($cpu, 'icache_numTCIM')) {
+    scan_bus($cpu_name . ".tightly_coupled_instruction_master_0", 0);
+}
 scan_bus($cpu_name . ".data_master", 0);
 
 if ($header) {
